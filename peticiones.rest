@@ -1,0 +1,88 @@
+@host = http://localhost:3000
+@tokenAdmin = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsInVzZXJuYW1lIjoiSmFpbWUiLCJyb2xlIjoiYWRtaW4iLCJsb2dEYXRlIjoiMjAyNC0xMC0yN1QxMjo1OTo0My4yNDNaIiwiaWF0IjoxNzMwMDMzOTgzfQ.OqnHcOe3dLbrtLdeaikAi9LAJhVBpli69P_yITChGaY
+@tokenRegular = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjU4LCJ1c2VybmFtZSI6IkRlbWV0cmlvIiwicm9sZSI6InJlZ3VsYXIiLCJsb2dEYXRlIjoiMjAyNC0xMC0yN1QxMTozNDoxNC4xODJaIiwiaWF0IjoxNzMwMDI4ODU0fQ.P_JGuh-qDn9O5E4480_NioTgyT1tYcaW_pMyZbvqwmg
+
+### REGISTRO DE NUEVO USUARIO
+POST {{host}}/api/users/register
+Content-Type: application/json
+
+{
+  "username" :"Dddddd",
+  "password": "1234",
+  "role":"regular"
+}
+
+### LOGIN DE USUARIO
+POST {{host}}/api/users/login
+Content-Type: application/json
+
+{
+  "username" :"Jaime",
+  "password": "1234"
+}
+
+### VER UN USUARIO POR ID
+GET {{host}}/api/users/profile/1
+authorization: {{tokenAdmin}}
+
+### _______________________________________EVENTOS
+
+### VER TODOS LOS EVENTOS
+GET {{host}}/api/events
+authorization: {{tokenRegular}}
+
+### VER TODOS LOS EVENTOS PAGINADOS
+GET {{host}}/api/events/page?page=1&quant=5
+authorization: {{tokenRegular}}
+
+### VER UN EVENTO POR ID
+GET {{host}}/api/events/2
+authorization: {{tokenRegular}}
+
+### AGREGAR UN EVENTO NECESARIO SER ADMIN
+POST {{host}}/api/events
+Content-Type: application/json
+authorization: {{tokenAdmin}}
+
+{
+  "book": "D&D",
+  "campaign": "Descenso a Averno",
+  "description": "Prueba",
+  "date": "2024-12-15",
+  "location": "La guarida del ContemplaRol, Madrid",
+  "duration" :"One Shot(1d)",
+  "dungeonMaster": "Paqui Laraña"
+}
+
+### ACTUALIZAR UN EVENTO NECESARIO SER ADMIN
+PUT {{host}}/api/events/67
+Content-Type: application/json
+authorization: {{tokenAdmin}}
+
+{
+  "book": "actualizar prueba 221",
+  "campaign": "Descenso a Averno",
+  "description": "Elturel ha sido durante años la representación del bien, el orden y la ley. En contraste, siguiendo el curso del río Chiontar hacia la Costa de la Espada, se alza una ciudad completamente opuesta, Puerta de Baldur, un nido de víboras y maleantes.",
+  "date": "2024-12-11",
+  "location": "La guarida del ContemplaRol, Madrid",
+  "duration" :"One Shot(1d)",
+  "dungeonMaster": "Daniel B."
+}
+
+### ELIMINAR UN EVENTO NECESARIO SER ADMIN
+DELETE {{host}}/api/events/76
+authorization: {{tokenAdmin}}
+
+### _________________EVENTOS AVANZADOS
+
+### VER EVENTOS DESDE HOY AL UN MES ORDENADOR POR FECHA
+GET {{host}}/api/events/upcoming
+authorization: {{tokenRegular}}
+
+### VER TODOS LOS EVENTOS DE UN TIPO CONCRETO
+GET {{host}}/api/events/libro?book=call of cthulhu
+authorization: {{tokenRegular}}
+
+### VER EVENTOS ENTRE LAS FECHAS ESPECIFICADAS
+GET {{host}}/api/events/date?from=2024-08-01&to=2024-08-30
+authorization: {{tokenRegular}}
